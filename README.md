@@ -1,20 +1,22 @@
-fleximenu
-=========
+# menu
 
-A basic menu builder in PHP
+A simple menu builder in PHP
 
+## Installation
 
-**Attention** This package is a basic menu builder and has been developed for an educational purpose. If you're a Laravel developer and looking for a menu builder with advanced features you can check out [Laravel-menu](https://github.com/lavary/laravel-menu) 
+To install this library make sure you have [composer](https://getcomposer.org/) installed, then run following command:
+
+```shell
+composer require symplely/menu
+```
 
 ## Usage
 
-
 ```php
 <?php
+require_once 'vendor/autoload.php';
 
-require_once('autoload.php');
-
-$menu = new Menu;
+$menu = new Async\Menu\Menu;
 
 $menu->add('Home', '');
 
@@ -24,7 +26,7 @@ $about = $menu->add('About', 'about');
 $about->link->append(' <span class="caret"></span>');
 
 // we can attach HTML attributes to the hyper-link as well
-$about->link->attributes(array('class' => 'link-item', 'target' => '_blank'));
+$about->link->attributes(['class' => 'link-item', 'target' => '_blank']);
 
 $about->attributes('data-model', 'nice');
 
@@ -36,31 +38,19 @@ $menu->add('Portfolio', 'portfolio');
 $menu->add('Contact',   'contact');
 
 // we're only going to hide items with `display` set to **false**
-
-$menu->filter( function($item){
-	if( $item->meta('display') === false) {
-		return false;
-	}
-	return true;
+$menu->filter( function($item) {
+    if( $item->meta('display') === false) {
+        return false;
+    }
+    return true;
 });
 
 // Now we can render the menu as various HTML entities:
-
-echo $menu->asUl( array('class' => 'awesome-ul') );
-
-//OR
-
-echo $menu->asOl( array('class' => 'awesome-ol') );
+echo $menu->asUl( attribute('class' => 'ausomw-ul') );
 
 // OR
+echo $menu->asOl( attribute('class' => 'ausomw-ol') );
 
-echo $menu->asDiv( array('class' => 'awesome-div') );
-
-?>
+// OR
+echo $menu->asDiv( attribute('class' => 'ausomw-div') );
 ```
-
-## If You Need Help
-Please submit all issues and questions using GitHub issues and I will try to help you :)
-
-## License
-Fleximenu is free software distributed under the terms of the MIT license
