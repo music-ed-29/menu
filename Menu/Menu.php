@@ -29,7 +29,7 @@ class Menu
      * @param  array|string  $options
      * @return Item
      */
-    public function add($title, $options = '', $priority = NULL)
+    public function add($title, $options = '', $priority = null)
     {
         $url  = $this->getUrl($options);
 
@@ -122,24 +122,14 @@ class Menu
     public function render($type = 'ul', $pid = null)
     {
         $items = '';
-
         $element = (\in_array($type, ['ul', 'ol'])) ? 'li' : $type;
-
-
-        //print_r($this->menu);
-        //die();
-
         foreach ($this->whereParent($pid) as $item) {
             $items .= "\n<{$element}{$this->parseAttr($item->attributes())}>";
-
             $items .= "<a href=\"{$item->link->url}\"{$this->parseAttr($item->link->attributes)}>{$item->link->text}</a>";
 
             if ($item->hasChildren()) {
-
                 $items .= "<{$type} class='dropdown-menu'>";
-
                 $items .= $this->render($type, $item->get_id());
-
                 $items .= "</{$type}>";
             }
 
@@ -216,7 +206,7 @@ class Menu
      *
      * @return string
      */
-    public function asUl($attributes = array())
+    public function renderUnordered($attributes = array())
     {
         return "<ul{$this->parseAttr($attributes)}>{$this->render('ul')}</ul>";
     }
@@ -226,7 +216,7 @@ class Menu
      *
      * @return string
      */
-    public function asOl($attributes = array())
+    public function renderOrdered($attributes = array())
     {
         return "<ol{$this->parseAttr($attributes)}>{$this->render('ol')}</ol>";
     }
@@ -236,8 +226,16 @@ class Menu
      *
      * @return string
      */
-    public function asDiv($attributes = array())
+    public function renderDiv($attributes = array())
     {
         return "<div{$this->parseAttr($attributes)}>{$this->render('div')}</div>";
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->render();
     }
 }

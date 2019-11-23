@@ -35,7 +35,7 @@ class Link
      * @param  array  $attributes
      * @return void
      */
-    public function __construct($text, $url, $attributes = array())
+    public function __construct(?string $text, ?string $url, array $attributes = array())
     {
         $this->text = $text;
 
@@ -44,13 +44,12 @@ class Link
         $this->attributes = $attributes;
     }
 
-
     /**
      * Return hyperlink's URL
      *
      * @return string $url
      */
-    public function get_url()
+    public function url()
     {
         return $this->url;
     }
@@ -60,11 +59,10 @@ class Link
      *
      * @return string $title
      */
-    public function get_text()
+    public function text()
     {
         return $this->text;
     }
-
 
     /**
      * Append content at the end of hyperlink's text
@@ -90,7 +88,6 @@ class Link
         return $this;
     }
 
-
     /**
      * Add attributes to the hyperlink
      *
@@ -101,7 +98,7 @@ class Link
     {
         $args = \func_get_args();
 
-        if (\is_array($args[0])) {
+        if (isset($args[0]) && \is_array($args[0])) {
             $this->attributes = \array_merge($this->attributes, $args[0]);
             return $this;
         } elseif (isset($args[0]) && isset($args[1])) {
@@ -112,5 +109,77 @@ class Link
         }
 
         return $this->attributes;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function setAttributes(array $attributes)
+    {
+        foreach ($attributes as $attribute => $value) {
+            if ($attribute === 'class') {
+                $this->addClass($value);
+                continue;
+            }
+
+            if (\is_int($attribute)) {
+                $attribute = $value;
+                $value = '';
+            }
+
+            $this->attributes($attribute, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function addClass($class)
+    {
+        $this->attributes(['class' => $class]);
+
+        return $this;
+    }
+
+    public function renderAttributes(): string
+    {
+        if (empty($this->attributes)) {
+            return '';
+        }
+
+        $attributeStrings = [];
+        foreach ($this->attributes as $attribute => $value) {
+            if (\is_null($value) || $value === '') {
+                $attributeStrings[] = $attribute;
+                continue;
+            }
+
+            $attributeStrings[] = "{$attribute}=\"{$value}\"";
+        }
+
+        return \implode(' ', $attributeStrings);
+    }
+
+    /**
+     * @return string
+     */
+    public function render(): string
+    {
+        $this->attributes(['href' => $this->url]);
+        return "<a {$this->renderAttributes()}>{$this->text}</a>";
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->render();
     }
 }

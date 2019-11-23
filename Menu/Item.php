@@ -79,7 +79,7 @@ class Item
      * @param  string|array  $options
      * @return void
      */
-    public function add($title, $options, $priority = NULL)
+    public function add($title, $options, $priority = null)
     {
         if (!\is_array($options)) {
             $options = array('url' => $options);
@@ -141,7 +141,7 @@ class Item
     }
 
     /**
-     * Set or get items's attributes
+     * Set or get item's attributes
      *
      * @return string|Item
      */
@@ -163,7 +163,7 @@ class Item
     }
 
     /**
-     * Set or get items's meta data
+     * Set or get item's meta data
      *
      * @return string|MenuItem
      */
@@ -171,7 +171,7 @@ class Item
     {
         $args = \func_get_args();
 
-        if (\is_array($args[0])) {
+        if (isset($args[0]) && \is_array($args[0])) {
             $this->meta = \array_merge($this->meta, $args[0]);
             return $this;
         } elseif (isset($args[0]) && isset($args[1])) {

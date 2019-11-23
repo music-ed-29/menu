@@ -4,37 +4,37 @@ declare(strict_types=1);
 
 use Async\Menu\Menu;
 
-if (!\function_exists('bootstrapItems')) {
-    function bootstrapItems(Menu $items)
+if (!\function_exists('bootstrap_menu')) {
+    function bootstrap_menu(Menu $items, string $extra = '')
     {
         // Starting from items at root level
         if (!\is_array($items)) {
             $items = $items->roots();
         }
 
-        $menu = '';
+        $html = '';
         foreach ($items as $item) {
-            $menu .= '<li';
+            $html .= '<li';
             if ($item->hasChildren())
-                $menu .= '> class="dropdown"';
+                $html .= ' class="dropdown'.(!empty($extra) ? ' '.$extra : '').'"';
 
-            $menu .= '><a href="' . $item->link->get_url() . '" ';
+            $html .= '><a href="' . $item->link->url() . '"';
             if ($item->hasChildren())
-                $menu .= 'class="dropdown-toggle" data-toggle="dropdown" ';
+                $html .= ' class="dropdown-toggle" data-toggle="dropdown"';
 
-            $menu .= $item->link->get_text();
+            $html .= '>' . $item->link->text();
             if ($item->hasChildren())
-                $menu .= ' <b class="caret"></b>';
-            $menu .= '</a>';
+                $html .= ' <b class="caret"></b>';
+            $html .= '</a>';
 
             if ($item->hasChildren()) {
-                $menu .= '<ul class="dropdown-menu">';
-                $menu .= \bootstrapItems($item->children());
-                $menu .= '</u>';
+                $html .= '<ul class="dropdown-menu">';
+                $html .= \bootstrap_menu($item->children());
+                $html .= '</ul>';
             }
-            $menu .= '</li>';
+            $html .= '</li>';
         }
 
-        return $menu;
+        return $html;
     }
 }
