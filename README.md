@@ -48,11 +48,11 @@ $menu->filter( function($item) {
 });
 
 // Now we can render the menu as various HTML entities:
-echo $menu->asUl( attribute('class' => 'ausomw-ul') );
+echo $menu->renderUnordered( ['class' => 'class-ul'] );
 
 // OR
-echo $menu->asOl( attribute('class' => 'ausomw-ol') );
+echo $menu->renderOrdered( ['class' => 'class-ol'] );
 
 // OR
-echo $menu->asDiv( attribute('class' => 'ausomw-div') );
+echo $menu->renderDiv( ['class' => 'class-div'] );
 ```
