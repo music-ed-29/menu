@@ -31,9 +31,7 @@ $menu->filter(function ($item) {
 
 // Now we can render the menu as various HTML entities:
 
-
-
-//OR
+// OR
 
 //$menu->asOl( attribute('class' => 'ausomw-ol') );
 
@@ -55,7 +53,7 @@ $menu->filter(function ($item) {
 
 <body>
     <?php
-    echo $menu->asUl(['class' => 'ausomw-ul']);
+    echo $menu->renderUnordered(['class' => 'ausomw-ul']);
     ?>
 </body>
 

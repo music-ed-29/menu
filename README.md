@@ -14,45 +14,96 @@ composer require symplely/menu
 
 ## Usage
 
+A **menu** can be instantiated and items can be added fluently with the `add` method,
+which requires a __url__ and a string of __text__ as parameters.
+
 ```php
 <?php
 require_once 'vendor/autoload.php';
 
 $menu = new Async\Menu\Menu;
 
+// The main menu
 $menu->add('Home', '');
 
+// Creates a sub menu
 $about = $menu->add('About', 'about');
 
-// since this item has sub items we append a caret icon to the hyperlink text
-$about->link->append(' <span class="caret"></span>');
+// Creates a another sub menu from the sub menu, passing url and other attributes in key = value pair.
+$support = $about->add('Who we are?', ['url' => 'who-we-are', 'class' => 'navbar-item who']);
 
-// we can attach HTML attributes to the hyper-link as well
-$about->link->attributes(['class' => 'link-item', 'target' => '_blank']);
+// Add items to sub menu, passing url and other attributes in key = value pair.
+$about->add('What we do?', ['url' => 'what-we-do', 'class' => 'navbar-item what']);
 
+// Item has sub items we append a caret icon to the hyperlink text
+$about->append(' <span class="caret"></span>');
+
+// Or just the preset, $default = 'caret'
+$about->caret($default);
+
+// Attach HTML attributes to the hyper-link as a key = value array
+$about->attributes(['class' => 'link-item', 'target' => '_blank']);
+
+// Or Separately
 $about->attributes('data-model', 'nice');
 
-$t = $about->add('Who we are?', array('url' => 'who-we-are',  'class' => 'navbar-item whoweare'));
-$about->add('What we do?', array('url' => 'what-we-do',  'class' => 'navbar-item whatwedo'));
+// Or the shorter
+$about->addClass('link-item');
+$about->addTarget('_blank');
 
-
+// Add more items to the main menu
 $menu->add('Portfolio', 'portfolio');
-$menu->add('Contact',   'contact');
+$menu->add('Contact', 'contact');
 
 // we're only going to hide items with `display` set to **false**
 $menu->filter( function($item) {
-    if( $item->meta('display') === false) {
+    if ($item->meta('display') === false) {
         return false;
     }
     return true;
 });
 
 // Now we can render the menu as various HTML entities:
-echo $menu->renderUnordered( ['class' => 'class-ul'] );
+echo $menu->renderUnordered(['class' => 'some-ul']);
 
 // OR
-echo $menu->renderOrdered( ['class' => 'class-ol'] );
+echo $menu->renderOrdered(['class' => 'some-ol']);
 
 // OR
-echo $menu->renderDiv( ['class' => 'class-div'] );
+echo $menu->renderDiv(['class' => 'some-div']);
+
+// For bootstrap users
+echo bootstrap_menu($menu);
+```
+
+Let's get things started by building a simple menu with two links. All of the following examples are using classes from the `Async\Menu` namespace.
+
+```html
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+```php
+$menu = new Link;
+$menu->add('Home', '/')
+$menu->add('About', '/about'));
+```
+
+When we render or echo the menu, it will output our intended html string.
+
+```php
+// Via the `render` method:
+echo $menu->render();
+
+// Or just through `__toString`:
+echo $menu;
+```
+
+```html
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
 ```

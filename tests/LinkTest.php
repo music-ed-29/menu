@@ -38,8 +38,18 @@ class LinkTest extends TestCase
     {
         $link = new Link('Home', 'https://test.menu');
         $this->assertEquals(
-            '<a class="home" href="https://test.menu">Home</a>',
+            '<a href="https://test.menu" class="home">Home</a>',
             $link->addClass('home')->render()
+        );
+    }
+
+    public function testRenderTargetToString()
+    {
+        $link = new Link('Home', 'https://test.menu');
+        $link->addTarget('test');
+        $this->assertEquals(
+            '<a target="test" href="https://test.menu">Home</a>',
+            $link
         );
     }
 

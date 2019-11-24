@@ -11,21 +11,26 @@ class Link
      *
      * @var string
      */
-    public $text;
+    protected $text;
 
     /**
      * Hyperlink's URL
      *
      * @var string
      */
-    public $url;
+    protected $url;
 
     /**
      * Hyperlink's attributes
      *
      * @var array
      */
-    public $attributes;
+    protected $attributes = [];
+
+    /**
+     * @var array
+     */
+    protected $classes = [];
 
     /**
      * Creates a hyperlink
@@ -72,6 +77,13 @@ class Link
     public function append($content)
     {
         $this->text .= $content;
+
+        return $this;
+    }
+
+    public function caret(string $marker = 'caret')
+    {
+        $this->append(' <span class="'.$marker.'"></span>');
 
         return $this;
     }
@@ -142,19 +154,37 @@ class Link
      */
     public function addClass($class)
     {
-        $this->attributes(['class' => $class]);
+        if (!\is_array($class)) {
+            $class = [$class];
+        }
+
+        $this->classes = \array_unique(
+            \array_merge($this->classes, $class)
+        );
 
         return $this;
     }
 
-    public function renderAttributes(): string
+    public function addTarget(string $target = '_blank')
     {
-        if (empty($this->attributes)) {
+        $this->attributes(['target' => $target]);
+
+        return $this;
+    }
+
+    protected function renderAttributes(): string
+    {
+        if (empty($this->attributes) && empty($this->classes)) {
             return '';
         }
 
         $attributeStrings = [];
-        foreach ($this->attributes as $attribute => $value) {
+
+        $attributes = !empty($this->classes)
+            ? \array_merge($this->attributes, ['class' => \implode(' ', $this->classes)])
+            : $this->attributes;
+
+        foreach ($attributes as $attribute => $value) {
             if (\is_null($value) || $value === '') {
                 $attributeStrings[] = $attribute;
                 continue;

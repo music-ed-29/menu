@@ -5,7 +5,7 @@ namespace Async\Menu\Test;
 use Async\Menu\Menu;
 use PHPUnit\Framework\TestCase;
 
-class MenuTests extends TestCase
+class MenuTest extends TestCase
 {
     protected $menu;
 
@@ -34,23 +34,28 @@ class MenuTests extends TestCase
         $builder = new Menu();
 
         $builder->add('Home');
-        $builder->add('About', 'about');
+        $about = $builder->add('About', 'about');
+        $about->add('Help', 'help');
+        $about->caret();
         $builder->add('Services', 'services');
         $builder->add('Contact', 'contact');
 
         $this->assertEquals('<ul>
 <li><a href="">Home</a></li>
-<li><a href="about">About</a></li>
+<li><a href="about">About <span class="caret"></span></a><ul class="dropdown-menu">
+<li><a href="help">Help</a></li></ul></li>
 <li><a href="services">Services</a></li>
 <li><a href="contact">Contact</a></li></ul>', $builder->renderUnordered());
         $this->assertEquals('<ol>
 <li><a href="">Home</a></li>
-<li><a href="about">About</a></li>
+<li><a href="about">About <span class="caret"></span></a><ol class="dropdown-menu">
+<li><a href="help">Help</a></li></ol></li>
 <li><a href="services">Services</a></li>
 <li><a href="contact">Contact</a></li></ol>', $builder->renderOrdered());
         $this->assertEquals('<div>
 <div><a href="">Home</a></div>
-<div><a href="about">About</a></div>
+<div><a href="about">About <span class="caret"></span></a><div class="dropdown-menu">
+<div><a href="help">Help</a></div></div></div>
 <div><a href="services">Services</a></div>
 <div><a href="contact">Contact</a></div></div>', $builder->renderDiv());
     }

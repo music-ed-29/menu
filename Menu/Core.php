@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-use Async\Menu\Menu;
-
 if (!\function_exists('bootstrap_menu')) {
-    function bootstrap_menu(Menu $items, string $extra = '')
+    function bootstrap_menu($items, string $extra = '')
     {
         // Starting from items at root level
         if (!\is_array($items)) {
@@ -18,21 +16,21 @@ if (!\function_exists('bootstrap_menu')) {
             if ($item->hasChildren())
                 $html .= ' class="dropdown'.(!empty($extra) ? ' '.$extra : '').'"';
 
-            $html .= '><a href="' . $item->link->url() . '"';
+            $html .= '><a href="' . $item->url() . '"';
             if ($item->hasChildren())
                 $html .= ' class="dropdown-toggle" data-toggle="dropdown"';
 
-            $html .= '>' . $item->link->text();
+            $html .= '>' . $item->text();
             if ($item->hasChildren())
                 $html .= ' <b class="caret"></b>';
             $html .= '</a>';
 
             if ($item->hasChildren()) {
-                $html .= '<ul class="dropdown-menu">';
+                $html .= "\n".'<ul class="dropdown-menu">'."\n";
                 $html .= \bootstrap_menu($item->children());
                 $html .= '</ul>';
             }
-            $html .= '</li>';
+            $html .= '</li>'."\n";
         }
 
         return $html;

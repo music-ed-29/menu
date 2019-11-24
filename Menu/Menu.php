@@ -42,9 +42,6 @@ class Menu
         // making an instance of Item class
         $item = new Item($this, $title, $url, $attr, $pid);
 
-        // Add the item to the menu array
-        //array_push($this->menu, $item);
-
         if (\is_null($priority) && \count($this->menu) > 0) {
             $priority = \max(\array_keys($this->menu)) ?: 0;
             $priority += 10;
@@ -125,10 +122,10 @@ class Menu
         $element = (\in_array($type, ['ul', 'ol'])) ? 'li' : $type;
         foreach ($this->whereParent($pid) as $item) {
             $items .= "\n<{$element}{$this->parseAttr($item->attributes())}>";
-            $items .= "<a href=\"{$item->link->url}\"{$this->parseAttr($item->link->attributes)}>{$item->link->text}</a>";
+            $items .= "<a href=\"{$item->url()}\"{$this->parseAttr($item->getAttributes())}>{$item->text()}</a>";
 
             if ($item->hasChildren()) {
-                $items .= "<{$type} class='dropdown-menu'>";
+                $items .= "<{$type} class=\"dropdown-menu\">";
                 $items .= $this->render($type, $item->get_id());
                 $items .= "</{$type}>";
             }
@@ -189,17 +186,15 @@ class Menu
         return \count($html) > 0 ? ' ' . \implode(' ', $html) : '';
     }
 
-
     /**
      * Count number of items in the menu
      *
      * @return int
      */
-    public function length()
+    public function count()
     {
         return \count($this->menu);
     }
-
 
     /**
      * Returns the menu as an unordered list.

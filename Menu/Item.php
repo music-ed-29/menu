@@ -48,7 +48,7 @@ class Item
      *
      * @var Link
      */
-    public $link;
+    protected $link;
 
     /**
      * Creates a new Async\Menu\MenuItem instance.
@@ -97,7 +97,7 @@ class Item
      */
     protected function id()
     {
-        return $this->manager->length() + 1;
+        return $this->manager->count() + 1;
     }
 
     /**
@@ -182,5 +182,55 @@ class Item
         }
 
         return $this->meta;
+    }
+
+    public function url()
+    {
+        return $this->link->url();
+    }
+
+    public function text()
+    {
+        return $this->link->text();
+    }
+
+    public function append($content)
+    {
+        return $this->link->append($content);
+    }
+
+    public function caret(string $marker = 'caret')
+    {
+        return $this->link->caret($marker);
+    }
+
+    public function prepend($content)
+    {
+        return $this->link->prepend($content);
+    }
+
+    public function setAttributes(array $attributes)
+    {
+        return $this->link->setAttributes($attributes);
+    }
+
+    public function getAttributes()
+    {
+        return $this->link->attributes();
+    }
+
+    public function addClass($class)
+    {
+        return $this->link->addClass($class);
+    }
+
+    public function addTarget(string $target = '_blank')
+    {
+        return $this->link->addTarget($target);
+    }
+
+    public function render(): string
+    {
+        return $this->link->render();
     }
 }

@@ -20,10 +20,10 @@ $user = new Menu;
 $user->add('login', 'login');
 $profile = $user->add('Profile', 'profile');
 $profile->add('Account', 'account')
-    ->link->prepend('<span class="glyphicon glyphicon-user"></span> ');
+    ->prepend('<span class="glyphicon glyphicon-user"></span> ');
 
 $profile->add('Settings', 'settings')
-    ->link->prepend('<span class="glyphicon glyphicon-cog"></span> ');
+    ->prepend('<span class="glyphicon glyphicon-cog"></span> ');
 ?>
 <html>
 
