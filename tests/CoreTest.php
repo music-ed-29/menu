@@ -19,9 +19,10 @@ class CoreTest extends TestCase
 
         $this->assertEquals('<li><a href="">Home</a></li>
 <li class="dropdown"><a href="about" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="help">Help</a></li>
-</ul></li>
+    <ul class="dropdown-menu">
+        <li><a href="help">Help</a></li>
+    </ul>
+</li>
 <li><a href="services">Services</a></li>
 <li><a href="contact">Contact</a></li>
 ', \bootstrap_menu($builder));

@@ -26,9 +26,9 @@ if (!\function_exists('bootstrap_menu')) {
             $html .= '</a>';
 
             if ($item->hasChildren()) {
-                $html .= "\n".'<ul class="dropdown-menu">'."\n";
-                $html .= \bootstrap_menu($item->children());
-                $html .= '</ul>';
+                $html .= "\n    ".'<ul class="dropdown-menu">'."\n";
+                $html .= "        ".\bootstrap_menu($item->children());
+                $html .= '    </ul>'."\n";
             }
             $html .= '</li>'."\n";
         }

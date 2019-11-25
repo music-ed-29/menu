@@ -61,4 +61,22 @@ class LinkTest extends TestCase
             $link->setAttributes(['data-home-link'])->render()
         );
     }
+
+    public function testRenderIcon()
+    {
+        $link = new Link('Home', 'https://test.menu');
+        $this->assertEquals(
+            '<a href="https://test.menu"><i class="fa fa-link lg"></i> Home</a>',
+            $link->addIcon('link')->render()
+        );
+    }
+
+    public function testRenderImage()
+    {
+        $link = new Link('Home', 'https://test.menu');
+        $this->assertEquals(
+            '<a href="https://test.menu"><img src="/link" class="icon" width="14px" height="14px"> Home</a>',
+            $link->addImage('/link')->render()
+        );
+    }
 }

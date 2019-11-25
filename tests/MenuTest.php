@@ -7,56 +7,40 @@ use PHPUnit\Framework\TestCase;
 
 class MenuTest extends TestCase
 {
-    protected $menu;
-
-    public function assertHtmlEquals(string $expected, string $actual, string $message = '')
+    public function testEmpty()
     {
-        $this->assertEquals(
-            $this->sanitizeHtmlWhitespace($expected),
-            $this->sanitizeHtmlWhitespace($actual),
-            $message
-        );
+        $menu = new Menu();
+        $this->assertEquals('', $menu->render());
     }
 
-    protected function sanitizeHtmlWhitespace(string $subject): string
-    {
-        $find = ['/>\s+</', '/(^\s+)|(\s+$)/'];
-        $replace = ['><', ''];
-        return preg_replace($find, $replace, $subject);
-    }
-
-    public function assertRenders(string $expected)
-    {
-        $this->assertHtmlEquals($expected, $this->menu->render());
-    }
     public function testBasic()
     {
         $builder = new Menu();
 
-        $builder->add('Home');
-        $about = $builder->add('About', 'about');
-        $about->add('Help', 'help');
+        $builder->add('Home', '/');
+        $about = $builder->add('About', '/about');
+        $about->add('Help', '/help');
         $about->caret();
-        $builder->add('Services', 'services');
-        $builder->add('Contact', 'contact');
+        $builder->add('Services', '/services');
+        $builder->add('Contact', '/contact');
 
         $this->assertEquals('<ul>
-<li><a href="">Home</a></li>
-<li><a href="about">About <span class="caret"></span></a><ul class="dropdown-menu">
-<li><a href="help">Help</a></li></ul></li>
-<li><a href="services">Services</a></li>
-<li><a href="contact">Contact</a></li></ul>', $builder->renderUnordered());
+<li><a href="/">Home</a></li>
+<li><a href="/about">About <span class="caret"></span></a><ul class="dropdown-menu">
+<li><a href="/help">Help</a></li></ul></li>
+<li><a href="/services">Services</a></li>
+<li><a href="/contact">Contact</a></li></ul>', $builder->renderUnordered());
         $this->assertEquals('<ol>
-<li><a href="">Home</a></li>
-<li><a href="about">About <span class="caret"></span></a><ol class="dropdown-menu">
-<li><a href="help">Help</a></li></ol></li>
-<li><a href="services">Services</a></li>
-<li><a href="contact">Contact</a></li></ol>', $builder->renderOrdered());
+<li><a href="/">Home</a></li>
+<li><a href="/about">About <span class="caret"></span></a><ol class="dropdown-menu">
+<li><a href="/help">Help</a></li></ol></li>
+<li><a href="/services">Services</a></li>
+<li><a href="/contact">Contact</a></li></ol>', $builder->renderOrdered());
         $this->assertEquals('<div>
-<div><a href="">Home</a></div>
-<div><a href="about">About <span class="caret"></span></a><div class="dropdown-menu">
-<div><a href="help">Help</a></div></div></div>
-<div><a href="services">Services</a></div>
-<div><a href="contact">Contact</a></div></div>', $builder->renderDiv());
+<div><a href="/">Home</a></div>
+<div><a href="/about">About <span class="caret"></span></a><div class="dropdown-menu">
+<div><a href="/help">Help</a></div></div></div>
+<div><a href="/services">Services</a></div>
+<div><a href="/contact">Contact</a></div></div>', $builder->renderDiv());
     }
 }

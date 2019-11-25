@@ -23,7 +23,8 @@ class Menu
     protected $reserved = array('pid', 'url');
 
     /**
-     * Create a new menu item
+     * Create a new menu item.
+     * Using the returned instance creates a `sub menu` item.
      *
      * @param  string  $title
      * @param  array|string  $options

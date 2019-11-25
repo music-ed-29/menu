@@ -231,6 +231,14 @@ class Item
 
     public function render(): string
     {
-        return $this->link->render();
+        return $this->manager->render();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->manager->render();
     }
 }

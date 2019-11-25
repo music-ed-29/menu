@@ -83,7 +83,7 @@ class Link
 
     public function caret(string $marker = 'caret')
     {
-        $this->append(' <span class="'.$marker.'"></span>');
+        $this->append(' <span class="' . $marker . '"></span>');
 
         return $this;
     }
@@ -98,6 +98,16 @@ class Link
         $this->text = $content . $this->text;
 
         return $this;
+    }
+
+    public function addImage(?string $path = null, $class = 'icon')
+    {
+        return $this->prepend('<img src="' . $path . '" class="' . $class . '" width="14px" height="14px"> ');
+    }
+
+    public function addIcon(string $icon = 'icon')
+    {
+        return $this->prepend('<i class="fa fa-' . $icon . ' lg"></i> ');
     }
 
     /**
