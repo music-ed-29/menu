@@ -107,3 +107,15 @@ echo $menu;
     <li><a href="/about">About</a></li>
 </ul>
 ```
+
+## The functional approach
+
+```php
+$menuInstance = \create_menu($url, $urlName, $iconImage, $iconType, $anyPreviousMenuInstance);
+$subMenu = \create_menuSub($menuInstance, $url, $urlName, $iconImage, $iconType);
+\create_menuItem($subMenu, $url, $urlName, $iconImage, $iconType);
+
+print $menuInstance->render());
+// Or
+print \bootstrap_menu($menuInstance);
+```
