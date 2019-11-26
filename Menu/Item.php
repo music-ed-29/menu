@@ -229,6 +229,16 @@ class Item
         return $this->link->addTarget($target);
     }
 
+    public function addImage(?string $path = null, $class = 'icon')
+    {
+        return $this->link->addImage($path, $class);
+    }
+
+    public function addIcon(string $icon = 'icon')
+    {
+        return $this->link->addIcon($icon);
+    }
+
     public function render(): string
     {
         return $this->manager->render();
