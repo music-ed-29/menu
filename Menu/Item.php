@@ -79,7 +79,7 @@ class Item
      * @param  string|array  $options
      * @return void
      */
-    public function add($title, $options, $priority = null)
+    public function add($title, $options = [], $priority = null)
     {
         if (!\is_array($options)) {
             $options = array('url' => $options);

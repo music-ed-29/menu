@@ -126,7 +126,7 @@ class Menu
             $items .= "<a href=\"{$item->url()}\"{$this->parseAttr($item->getAttributes())}>{$item->text()}</a>";
 
             if ($item->hasChildren()) {
-                $items .= "<{$type} class=\"dropdown-menu\">";
+                $items .= "\n<{$type} class=\"dropdown-menu\">";
                 $items .= $this->render($type, $item->get_id());
                 $items .= "</{$type}>";
             }

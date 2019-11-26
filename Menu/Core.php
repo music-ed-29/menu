@@ -6,7 +6,7 @@ use Async\Menu\Item;
 use Async\Menu\Menu;
 
 if (!\function_exists('bootstrap_menu')) {
-    function create_menu(string $url = "#", ?string $name, ?string $icon, ?string $type, ?Menu $menu)
+    function create_menu(?string $url = "#", ?string $name = '', ?string $icon = '', ?string $type = '', ?Menu $menu = null)
     {
         if (empty($menu))
             $menu = new Menu;
@@ -23,7 +23,7 @@ if (!\function_exists('bootstrap_menu')) {
         return $menu;
     }
 
-    function create_menuSub(Menu $menu, string $url = "#", ?string $name, ?string $icon, ?string $type)
+    function create_menuSub(Menu $menu, string $url = "#", ?string $name = '', ?string $icon = '', ?string $type = '')
     {
         $subMenu = $menu->add($name, ['url' => $url, 'class' => 'submenu']);
         $subMenu->caret();
@@ -38,7 +38,7 @@ if (!\function_exists('bootstrap_menu')) {
         return $subMenu;
     }
 
-    function create_menuItem(Item $item, string $url = "#", ?string $name, ?string $icon, ?string $type)
+    function create_menuItem(Item $item, string $url = "#", ?string $name = '', ?string $icon = '', ?string $type = '')
     {
         $item->add($name, $url);
         if (!empty($icon)) {
